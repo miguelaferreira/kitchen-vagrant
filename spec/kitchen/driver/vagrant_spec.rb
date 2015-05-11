@@ -1445,7 +1445,7 @@ describe Kitchen::Driver::Vagrant do
           :key1 => "some string value",
           :key2 => 22,
           :key3 => false
-        }
+         }
         cmd
 
         expect(vagrantfile).to match(regexify(<<-RUBY.gsub(/^ {8}/, "").chomp))
@@ -1453,6 +1453,26 @@ describe Kitchen::Driver::Vagrant do
             p.key1 = "some string value"
             p.key2 = 22
             p.key3 = false
+          end
+        RUBY
+      end
+    end
+
+    context "for cloudstack provider" do
+
+      before { config[:provider] = "cloudstack" }
+
+      it "adds a line for each element in :customize" do
+        config[:customize] = {
+          :a_key => "some value",
+          :something => "else"
+        }
+        cmd
+
+        expect(vagrantfile).to match(regexify(<<-RUBY.gsub(/^ {8}/, "").chomp))
+          c.vm.provider :cloudstack do |p|
+            p.a_key = "some value"
+            p.something = "else"
           end
         RUBY
       end

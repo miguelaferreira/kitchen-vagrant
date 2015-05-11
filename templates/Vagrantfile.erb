@@ -124,6 +124,8 @@ Vagrant.configure("2") do |c|
     <% else  %>
     p.<%= key %> = <%= value%>
     <% end  %>
+  <% when "cloudstack" %>
+    p.<%= key %> = "<%= value %>"
   <% end %>
 <% end %>
   end
