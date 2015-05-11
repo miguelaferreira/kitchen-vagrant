@@ -125,7 +125,12 @@ Vagrant.configure("2") do |c|
     p.<%= key %> = <%= value%>
     <% end  %>
   <% when "cloudstack" %>
+    <% case key.to_s.strip
+       when "firewall_rules", "static_nat", /^.+_rules/, /^security_group/ %>
+    p.<%= key %> = <%= value %>
+    <% else %>
     p.<%= key %> = "<%= value %>"
+    <% end %>
   <% end %>
 <% end %>
   end
